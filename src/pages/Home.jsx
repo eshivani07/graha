@@ -1,46 +1,43 @@
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-// Approximate positions of each planet in solar-system.jpg (1200 x 675),
-// expressed as percentages so the clickable areas scale with the image.
-const planetSpots = [
-  { name: 'Mercury', path: '/mercury', left: '29.4%', top: '51.1%', width: '3%', height: '5%' },
-  { name: 'Venus', path: '/venus', left: '34.4%', top: '51.1%', width: '4%', height: '7%' },
-  { name: 'Earth', path: '/earth', left: '40%', top: '51.1%', width: '4.3%', height: '7.5%' },
-  { name: 'Mars', path: '/mars', left: '44.8%', top: '51.1%', width: '3%', height: '5.5%' },
-  { name: 'Jupiter', path: '/jupiter', left: '55.8%', top: '51.1%', width: '16%', height: '28%' },
-  { name: 'Saturn', path: '/saturn', left: '74.6%', top: '51.9%', width: '15%', height: '27%' },
-  { name: 'Uranus', path: '/uranus', left: '86.3%', top: '51.1%', width: '9%', height: '16%' },
-  { name: 'Neptune', path: '/neptune', left: '95.8%', top: '51.1%', width: '9%', height: '16%' },
+const planets = [
+  { name: 'Mercury', path: '/mercury', image: '/assets/planets/mercury.png', size: 'clamp(20px, 3vw, 40px)' },
+  { name: 'Venus', path: '/venus', image: '/assets/planets/venus.png', size: 'clamp(28px, 4vw, 55px)' },
+  { name: 'Earth', path: '/earth', image: '/assets/planets/earth.png', size: 'clamp(30px, 4.5vw, 60px)' },
+  { name: 'Mars', path: '/mars', image: '/assets/planets/mars.png', size: 'clamp(24px, 3.5vw, 45px)' },
+  { name: 'Jupiter', path: '/jupiter', image: '/assets/planets/jupiter.png', size: 'clamp(70px, 9vw, 130px)' },
+  { name: 'Saturn', path: '/saturn', image: '/assets/planets/saturn.png', size: 'clamp(65px, 8.5vw, 120px)' },
+  { name: 'Uranus', path: '/uranus', image: '/assets/planets/uranus.png', size: 'clamp(45px, 6vw, 85px)' },
+  { name: 'Neptune', path: '/neptune', image: '/assets/planets/neptune.png', size: 'clamp(45px, 6vw, 85px)' },
 ]
 
 function Home() {
-  const navigate = useNavigate()
-
   return (
     <div>
       <h1>GRAHA</h1>
       <p>GRAHA — Explore the Solar System</p>
 
-      <div className="solar-system-container">
+      <div className="solar-system">
         <img
-          src="/solar-system.jpg"
-          alt="Solar System"
-          className="solar-system-image"
+          src="/assets/planets/sun.png"
+          alt="Sun"
+          className="sun-image"
         />
 
-        {planetSpots.map((planet) => (
-          <button
+        {planets.map((planet) => (
+          <Link
             key={planet.name}
-            className="planet-hotspot"
-            style={{
-              left: planet.left,
-              top: planet.top,
-              width: planet.width,
-              height: planet.height,
-            }}
-            onClick={() => navigate(planet.path)}
+            to={planet.path}
+            className="planet-link"
             aria-label={planet.name}
-          ></button>
+          >
+            <img
+              src={planet.image}
+              alt={planet.name}
+              className="planet-image"
+              style={{ width: planet.size }}
+            />
+          </Link>
         ))}
       </div>
 
